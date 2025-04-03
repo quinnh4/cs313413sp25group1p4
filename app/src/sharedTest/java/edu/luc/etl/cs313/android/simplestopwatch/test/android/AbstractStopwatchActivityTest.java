@@ -100,6 +100,54 @@ public abstract class AbstractStopwatchActivityTest {
         getActivity().runOnUiThread(() -> assertEquals(0, getDisplayedValue()));
     }
 
+    /**
+     *Test that the timer can be incremented and run again after
+     *  the timer reaches 0 and the alarm is stopped.*
+     * @throws Throwable
+     */
+    @Test
+    public void testTimerTimeoutReset() throws Throwable {
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());  //kept as startstop atm.
+        });
+        Thread.sleep(3500); // <-- do not run this in the UI thread!  //sleeps 3 to wait for increment - > running
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue());
+        });
+        Thread.sleep(1000); // <-- do not run this in the UI thread!
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());  // stops the alarm still kept as startstopbutton
+        });
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+            assertEquals(3, getDisplayedValue()); //adds 3 to the timer
+            assertTrue(getResetLapButton().performClick());
+        });
+        Thread.sleep(3500);
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(3, getDisplayedValue());
+            assertTrue(getResetLapButton().performClick());
+        });
+        Thread.sleep(2000);
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue());
+            assertTrue(getResetLapButton().performClick());
+        });
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> assertEquals(0, getDisplayedValue()));
+    }
+
+
+
     // auxiliary methods for easy access to UI widgets
 
     protected abstract StopwatchAdapter getActivity();
