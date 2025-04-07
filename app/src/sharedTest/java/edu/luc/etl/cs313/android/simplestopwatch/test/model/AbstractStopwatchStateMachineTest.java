@@ -54,6 +54,11 @@ public abstract class AbstractStopwatchStateMachineTest {
         this.model.actionInit();
     }
 
+    protected StopwatchStateMachine getModel() {
+        return model;
+    }
+
+
     protected UnifiedMockDependency getDependency() {
         return dependency;
     }
