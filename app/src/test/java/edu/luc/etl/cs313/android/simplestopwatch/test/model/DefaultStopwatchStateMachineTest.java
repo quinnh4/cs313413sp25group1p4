@@ -7,6 +7,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.state.DefaultStopwatchSta
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Concrete testcase subclass for the default stopwatch state machine
@@ -54,6 +55,35 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
 
         getModel().onTick();
         assertEquals(101, getDependency().getRuntime());
+    }
+
+    @Test
+    public void testAlarmStop() {
+        // Initial runtime should be zero
+        assertEquals(0, getDependency().getRuntime());
+
+        // Simulate user pressing the button once to start the timer
+        getModel().onStartStop();
+
+        // Simulate a 3-second wait
+        // TODO: When countdown is implemented, we'll have to simulate the transition to countdown state here
+
+        // Simulate a tick that would decrement time
+        // TODO: In countdown mode, this would reduce runtime from a set value toward 0
+        getModel().onTick(); // No effect in current implementation
+
+        // Simulate the alarm sounding after hitting 0
+        // TODO: When alarm functionality is added, we'll have to assert that the alarm is active
+
+        // Simulate pressing the button to stop the alarm
+        getModel().onStartStop();
+
+        //  Assert current runtime remains 0 and stopwatch is no longer active
+        assertEquals(0, getDependency().getRuntime());
+        assertFalse(getDependency().isStarted());
+
+        // TODO: Once alarm is implemented, we'll add:
+        // assertFalse(getDependency().isAlarmOn());
     }
 
     @Test
