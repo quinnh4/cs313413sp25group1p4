@@ -60,6 +60,33 @@ public abstract class AbstractStopwatchActivityTest {
             assertTrue(getStartStopButton().performClick());
         });
     }
+    /**
+     * Verifies the following scenario: time is 0, press start, wait 5+ seconds, expect time 5.
+     *
+     * @throws Throwable
+     */
+    @Test
+    public void testRotation() throws Throwable {
+        //setup clock for 5 secs
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
+        });
+        Thread.sleep(3500); // <-- do not run this in the UI thread!
+        runUiThreadTasks();
+        //code to save state via robolectric
+        //code to update state to be rotated
+        getActivity().runOnUiThread(() -> {
+            //checks if state is restored.
+            assertEquals(5, getDisplayedValue());
+        });
+
+    }
+
 
     /**
      * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
