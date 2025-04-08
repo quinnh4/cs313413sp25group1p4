@@ -172,4 +172,22 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         //assertTrue("Exceeds 99 seconds", getDependency().getTime() <= 99);
     }
 
+    @Test
+    public void testInitiialTimer(){
+        //David: make sure timer starts at 00
+        assertEquals(0, getDependency().getTime());
+
+    }
+
+    @Test
+    public void testNoAlarmOnLoad(){
+        //David: No alarm on load
+        assertEquals(0, getDependency().getRuntime());
+        assertFalse(getDependency().isStarted());
+
+        //assertFalse(getDependency().isAlaarmOn()); //uncomment when alarm is implemented. prob change method name
+
+
+    }
+
 }
