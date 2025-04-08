@@ -58,6 +58,33 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     }
 
     @Test
+    public void testTimerForcedReset() {
+        // Ensure initial runtime is zero
+        assertEquals(0, getDependency().getRuntime());
+
+        // Start the timer
+        getModel().onStartStop();
+
+        // TODO: Simulate 3-second delay and transition to countdown when implemented
+
+        // Simulate tick (currently increments)
+        getModel().onTick();
+
+        // Stop the timer mid-countdown
+        getModel().onStartStop();
+
+        // Reset the timer
+        getModel().onLapReset();
+
+        // Verifies timer is cleared and not running
+        assertEquals(0, getDependency().getRuntime());
+        assertFalse(getDependency().isStarted());
+
+        // TODO: Add assertions for countdown state and forced reset behavior when available
+    }
+
+
+    @Test
     public void testAlarmStop() {
         // Initial runtime should be zero
         assertEquals(0, getDependency().getRuntime());
