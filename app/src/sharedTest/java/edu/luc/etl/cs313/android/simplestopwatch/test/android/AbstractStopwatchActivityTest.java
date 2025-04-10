@@ -128,6 +128,53 @@ public abstract class AbstractStopwatchActivityTest {
     }
 
     /**
+     * Test that the timer automatically starts to decrement
+     * after 3 seconds after last button press
+     */
+    @Test
+    public void testAutoTimer() throws Throwable {
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick()); // perform two clicks to get to 2 seconds
+        });
+        Thread.sleep(3000); // wait for 3 seconds
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(2, getDisplayedValue()); // check if value is at 2 at start
+        });
+        Thread.sleep(1000); // wait for 1 second
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue()); // check if decrements to 1 after 1 second
+        });
+    }
+
+    /**
+     * Test that the timer can be stopped by pressing the button during the decrementing stage
+     */
+    @Test
+    public void testButtonStops() throws Throwable {
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick()); // perform two clicks to get to 2 seconds
+        });
+        Thread.sleep(3000); // wait for 3 seconds
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(2, getDisplayedValue()); // check if value is at 2 at start
+        });
+        Thread.sleep(1000); // wait for 1 second
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue()); // check if decrements to 1 after 1 second
+            assertTrue(getStartStopButton().performClick());  // button press stop the timer
+            assertEquals(0, getDisplayedValue()); // check if this button press set the timer back to 0
+        });
+    }
+
+    /**
      *Test that the timer can be incremented and run again after
      *  the timer reaches 0 and the alarm is stopped.*
      * @throws Throwable
