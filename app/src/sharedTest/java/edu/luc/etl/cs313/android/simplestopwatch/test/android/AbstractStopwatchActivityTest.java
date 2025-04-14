@@ -130,6 +130,7 @@ public abstract class AbstractStopwatchActivityTest {
     /**
      * Test that the timer automatically starts to decrement
      * after 3 seconds after last button press
+     * @throws Throwable
      */
     @Test
     public void testAutoTimer() throws Throwable {
@@ -152,6 +153,7 @@ public abstract class AbstractStopwatchActivityTest {
 
     /**
      * Test that the timer can be stopped by pressing the button during the decrementing stage
+     * @throws Throwable
      */
     @Test
     public void testButtonStops() throws Throwable {
@@ -171,6 +173,29 @@ public abstract class AbstractStopwatchActivityTest {
             assertEquals(1, getDisplayedValue()); // check if decrements to 1 after 1 second
             assertTrue(getStartStopButton().performClick());  // button press stop the timer
             assertEquals(0, getDisplayedValue()); // check if this button press set the timer back to 0
+        });
+    }
+
+    @Test
+    public void testAutoStop() throws Throwable {
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick()); // perform one click to get one second
+        });
+        Thread.sleep(3000); // wait for 3 seconds
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue()); // check if value is 1 at start
+        });
+        Thread.sleep(1000); // wait for 1 second
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue()); // check if decrements to 0 after 1 second
+        });
+        Thread.sleep(1000);
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue()); // check if the clock is still at 0, since it hasn't been reset
         });
     }
 
