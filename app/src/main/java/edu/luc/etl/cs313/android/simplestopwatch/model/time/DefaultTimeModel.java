@@ -18,7 +18,8 @@ public class DefaultTimeModel implements TimeModel {
 
     @Override
     public void incRuntime() {
-        runningTime = (runningTime + SEC_PER_TICK) % SEC_PER_HOUR;
+        // capping off the runtime at 99 so it does not exceed
+        runningTime = Math.min(runningTime + SEC_PER_TICK, 99);
     }
 
     @Override
