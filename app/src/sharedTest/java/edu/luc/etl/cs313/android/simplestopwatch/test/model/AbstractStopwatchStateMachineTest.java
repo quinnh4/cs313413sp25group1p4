@@ -201,7 +201,8 @@ class UnifiedMockDependency implements TimeModel, ClockModel, StopwatchModelList
 
     @Override
     public void incRuntime() {
-        runningTime++;
+        // had to change runningTime++ to this so it stops at 99 and not 100
+        runningTime = Math.min(runningTime + 1, 99);
     }
 
     @Override
