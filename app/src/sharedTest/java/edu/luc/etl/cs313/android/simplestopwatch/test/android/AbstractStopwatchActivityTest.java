@@ -176,6 +176,11 @@ public abstract class AbstractStopwatchActivityTest {
         });
     }
 
+
+    /**
+     *  Tests if time remains on 0 seconds after the time runs out
+     *  @throws Throwable
+     */
     @Test
     public void testAutoStop() throws Throwable {
         getActivity().runOnUiThread(() -> {
@@ -196,6 +201,25 @@ public abstract class AbstractStopwatchActivityTest {
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue()); // check if the clock is still at 0, since it hasn't been reset
+        });
+    }
+
+    /**
+     *  Tests if time stays consistent between gets while not decrementign
+     *  @throws Throwable
+     */
+    @Test
+    public void testGet() throws Throwable {
+        getActivity().runOnUiThread(() -> {
+            assertEquals(0, getDisplayedValue());
+            assertTrue(getStartStopButton().performClick());
+            assertEquals(1, getDisplayedValue()); // test if 1 second shown
+
+        });
+        Thread.sleep(2000); // wait for 2 seconds
+        runUiThreadTasks();
+        getActivity().runOnUiThread(() -> {
+            assertEquals(1, getDisplayedValue()); // test if clock is still at 1 seconds, as 3 seconds not been reached
         });
     }
 
