@@ -12,13 +12,14 @@ public class StoppedState implements StopwatchState {
 
     @Override
     public void onStartStop() {
-        if (sm.getTime() > 99) {
-            sm.toCountdownState();
+        //logic goes in incrementing. stopped passes directly to incrementing with a button press event.
+//        if (sm.getTime() > 99) {
+//            sm.toCountdownState();
+//            sm.actionStart();
+//        } else {
             sm.actionStart();
-        } else {
-            sm.actionStart();
-            sm.toRunningState();
-        }
+            sm.toIncrementingState();
+
     }
 //
 //    @Override
