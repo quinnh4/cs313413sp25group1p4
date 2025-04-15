@@ -20,6 +20,7 @@ public class DefaultTimeModel implements TimeModel {
     public void incRuntime() {
         // capping off the runtime at 99 so it does not exceed
         runningTime = Math.min(runningTime + SEC_PER_TICK, 99);
+        //this logic can be passed to the boundedcontainer from click counter.
     }
 
     @Override
