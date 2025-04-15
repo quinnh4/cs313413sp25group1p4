@@ -23,6 +23,11 @@ public class DefaultTimeModel implements TimeModel {
     }
 
     @Override
+    public void decRuntime(){
+        runningTime = Math.max(runningTime - SEC_PER_TICK, 0);
+    }
+
+    @Override
     public int getRuntime() {
         return runningTime;
     }

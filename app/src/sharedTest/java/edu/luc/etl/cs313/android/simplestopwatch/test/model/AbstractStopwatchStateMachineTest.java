@@ -206,6 +206,11 @@ class UnifiedMockDependency implements TimeModel, ClockModel, StopwatchModelList
     }
 
     @Override
+    public void decRuntime() {
+        runningTime = Math.max(runningTime - 1, 0);
+    }
+
+    @Override
     public int getRuntime() {
         return runningTime;
     }

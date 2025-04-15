@@ -30,9 +30,9 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         super.tearDown();
     }
 
+
     @Test
     public void testMaximumPress() {
-        //  Initial time is 0
         assertEquals(0, getDependency().getRuntime());
 
         //  Increment to 99
@@ -42,19 +42,18 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
             getModel().onStartStop();  // Stop
         }
 
-        //  Confirm we're at 99
         assertEquals(99, getDependency().getRuntime());
 
-        //  Placeholder for countdown trigger
-        getModel().onStartStop(); // Attempt to trigger countdown
-        getModel().onStartStop(); // Again
+        // Trigger countdown
+        getModel().onStartStop(); // Stop -> StoppedState
+        getModel().onStartStop(); // StoppedState -> CountdownState and clock starts
 
-        //  Simulate tick — runtime will increase because countdown isn't implemented yet
-        getModel().onTick();
-        assertEquals(100, getDependency().getRuntime());
+        // Tick in countdown
+        getModel().onTick(); // now should decrement
+        assertEquals(98, getDependency().getRuntime());
 
         getModel().onTick();
-        assertEquals(101, getDependency().getRuntime());
+        assertEquals(97, getDependency().getRuntime());
     }
 
     @Test
@@ -139,6 +138,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         assertTimeEquals(5);
 
         // need to add methods to actually decrement
+        getModel().onStartStop();
+        getModel().onStartStop(); //To countdown
         // decrement by 1
         getModel().onTick();
         // verify time decremented by 1

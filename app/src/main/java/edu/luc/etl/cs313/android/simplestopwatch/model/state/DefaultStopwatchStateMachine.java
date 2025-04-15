@@ -19,6 +19,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     private final TimeModel timeModel;
 
     private final ClockModel clockModel;
+    private final StopwatchState COUNTDOWN = new CountdownState(this);
 
     /**
      * The internal state of this adapter component. Required for the State pattern.
@@ -29,6 +30,8 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         this.state = state;
         listener.onStateUpdate(state.getId());
     }
+
+    @Override public void toCountdownState() { setState(COUNTDOWN); }
 
     private StopwatchModelListener listener;
 
@@ -63,6 +66,17 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     @Override public void actionInit()       { toStoppedState(); actionReset(); }
     @Override public void actionReset()      { timeModel.resetRuntime(); actionUpdateView(); }
     @Override public void actionStart()      { clockModel.start(); }
+    @Override
+    public void actionDec() {
+        timeModel.decRuntime();
+        actionUpdateView();
+    }
+
+    @Override
+    public int getTime() {
+        return timeModel.getRuntime();
+    }
+
     @Override public void actionStop()       { clockModel.stop(); }
     @Override public void actionLap()        { timeModel.setLaptime(); }
     @Override public void actionInc()        { timeModel.incRuntime(); actionUpdateView(); }

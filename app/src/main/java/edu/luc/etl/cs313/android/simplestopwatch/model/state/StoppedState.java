@@ -2,18 +2,23 @@ package edu.luc.etl.cs313.android.simplestopwatch.model.state;
 
 import edu.luc.etl.cs313.android.simplestopwatch.R;
 
-class StoppedState implements StopwatchState {
+public class StoppedState implements StopwatchState {
 
-    public StoppedState(final StopwatchSMStateView sm) {
+    public StoppedState(final StopwatchStateMachine sm) {
         this.sm = sm;
     }
 
-    private final StopwatchSMStateView sm;
+    private final StopwatchStateMachine sm;
 
     @Override
     public void onStartStop() {
-        sm.actionStart();
-        sm.toRunningState();
+        if (sm.getTime() > 99) {
+            sm.toCountdownState();
+            sm.actionStart();
+        } else {
+            sm.actionStart();
+            sm.toRunningState();
+        }
     }
 
     @Override
@@ -24,7 +29,7 @@ class StoppedState implements StopwatchState {
 
     @Override
     public void onTick() {
-        throw new UnsupportedOperationException("onTick");
+
     }
 
     @Override
