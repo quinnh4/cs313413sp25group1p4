@@ -3,7 +3,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.R;
 
 
 public class CountdownState implements StopwatchState {
-
+    //doesn't RunningState essentially do this?
     private final StopwatchStateMachine sm;
 
     public CountdownState(final StopwatchStateMachine sm) {
@@ -15,12 +15,12 @@ public class CountdownState implements StopwatchState {
         sm.actionStop();
         sm.toStoppedState();
     }
-
-    @Override
-    public void onLapReset() {
-        sm.actionReset();
-        sm.toStoppedState();
-    }
+//
+//    @Override
+//    public void onLapReset() {
+//        sm.actionReset();
+//        sm.toStoppedState();
+//    }
 
     @Override
     public void onTick() {

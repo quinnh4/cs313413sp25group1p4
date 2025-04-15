@@ -94,34 +94,34 @@ public abstract class AbstractStopwatchStateMachineTest {
      *
      * @throws Throwable
      */
-    @Test
-    public void testScenarioRunLapReset() {
-        assertTimeEquals(0);
-        assertFalse(dependency.isStarted());
-        // directly invoke the button press event handler methods
-        model.onStartStop();
-        assertEquals(R.string.RUNNING, dependency.getState());
-        assertTrue(dependency.isStarted());
-        onTickRepeat(5);
-        assertTimeEquals(5);
-        model.onLapReset();
-        assertEquals(R.string.LAP_RUNNING, dependency.getState());
-        assertTrue(dependency.isStarted());
-        onTickRepeat(4);
-        assertTimeEquals(5);
-        model.onStartStop();
-        assertEquals(R.string.LAP_STOPPED, dependency.getState());
-        assertFalse(dependency.isStarted());
-        assertTimeEquals(5);
-        model.onLapReset();
-        assertEquals(R.string.STOPPED, dependency.getState());
-        assertFalse(dependency.isStarted());
-        assertTimeEquals(9);
-        model.onLapReset();
-        assertEquals(R.string.STOPPED, dependency.getState());
-        assertFalse(dependency.isStarted());
-        assertTimeEquals(0);
-    }
+//    @Test
+//    public void testScenarioRunLapReset() {
+//        assertTimeEquals(0);
+//        assertFalse(dependency.isStarted());
+//        // directly invoke the button press event handler methods
+//        model.onStartStop();
+//        assertEquals(R.string.RUNNING, dependency.getState());
+//        assertTrue(dependency.isStarted());
+//        onTickRepeat(5);
+//        assertTimeEquals(5);
+//        model.onLapReset();
+//        assertEquals(R.string.LAP_RUNNING, dependency.getState());
+//        assertTrue(dependency.isStarted());
+//        onTickRepeat(4);
+//        assertTimeEquals(5);
+//        model.onStartStop();
+//        assertEquals(R.string.LAP_STOPPED, dependency.getState());
+//        assertFalse(dependency.isStarted());
+//        assertTimeEquals(5);
+//        model.onLapReset();
+//        assertEquals(R.string.STOPPED, dependency.getState());
+//        assertFalse(dependency.isStarted());
+//        assertTimeEquals(9);
+//        model.onLapReset();
+//        assertEquals(R.string.STOPPED, dependency.getState());
+//        assertFalse(dependency.isStarted());
+//        assertTimeEquals(0);
+//    }
 
     /**
      * Sends the given number of tick events to the model.

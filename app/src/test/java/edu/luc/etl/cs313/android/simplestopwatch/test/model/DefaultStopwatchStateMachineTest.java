@@ -73,7 +73,7 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         getModel().onStartStop();
 
         // Reset the timer
-        getModel().onLapReset();
+        //getModel().onLapReset();  removed since there is no lapreset button in the final timer.
 
         // Verifies timer is cleared and not running
         assertEquals(0, getDependency().getRuntime());
