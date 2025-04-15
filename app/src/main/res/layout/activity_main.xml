@@ -72,13 +72,6 @@
             android:onClick="onStartStop"
             android:text="@string/startStop" />
 
-        <Button
-            android:id="@+id/resetLap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/startStop"
-            android:onClick="onLapReset"
-            android:text="@string/resetLap" />
     </RelativeLayout>
 
 </RelativeLayout>
