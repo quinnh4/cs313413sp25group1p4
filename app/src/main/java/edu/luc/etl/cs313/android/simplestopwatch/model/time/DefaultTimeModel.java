@@ -45,6 +45,6 @@ public class DefaultTimeModel implements TimeModel {
 
     @Override
     public void setRuntime(int runtime) {
-
+        runningTime = runtime;
     }
 }

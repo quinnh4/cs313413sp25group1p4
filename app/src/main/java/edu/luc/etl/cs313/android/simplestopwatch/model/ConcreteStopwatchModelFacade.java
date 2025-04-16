@@ -10,6 +10,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.state.StopwatchStateMachi
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.DefaultTimeModel;
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.TimeModel;
 
+
 /**
  * An implementation of the model facade.
  *
@@ -45,6 +46,7 @@ public class ConcreteStopwatchModelFacade implements StopwatchModelFacade {
     @Override
     public void onStartStop() {
         stateMachine.onStartStop();
+
     }
 
     //

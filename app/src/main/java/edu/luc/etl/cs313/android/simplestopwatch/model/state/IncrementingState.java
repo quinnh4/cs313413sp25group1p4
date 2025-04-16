@@ -32,7 +32,7 @@ public class IncrementingState implements StopwatchState{
     @Override
     public void onTick() {
         waitTime-=1000;
-        if(waitTime<=0500){
+        if(waitTime<=500){
             sm.toRunningState();
         }
         else{sm.toIncrementingState();}
