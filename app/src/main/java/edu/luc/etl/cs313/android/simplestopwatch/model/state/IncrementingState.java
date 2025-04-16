@@ -6,11 +6,11 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerCon
 
 public class IncrementingState implements StopwatchState{
     private final StopwatchSMStateView sm;
-    private int waitTime = 3;
-    private BoundedContainer incrementingContainer;
+    private int waitTime = 3000;
+
     public IncrementingState(final StopwatchSMStateView sm) {
         this.sm = sm;
-        this.incrementingContainer = new DefaultTimerContainer(0);
+
     }
     @Override
     public void updateView() {
@@ -25,14 +25,14 @@ public class IncrementingState implements StopwatchState{
     @Override
     public void onStartStop() {
         sm.actionInc();
-        waitTime = 3;
+        waitTime = 3000;
     }
 
 
     @Override
     public void onTick() {
-        waitTime--;
-        if(waitTime<=0){
+        waitTime-=1000;
+        if(waitTime<=0500){
             sm.toRunningState();
         }
         else{sm.toIncrementingState();}

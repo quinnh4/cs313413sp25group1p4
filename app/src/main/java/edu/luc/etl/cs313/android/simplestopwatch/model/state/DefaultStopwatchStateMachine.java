@@ -2,6 +2,8 @@ package edu.luc.etl.cs313.android.simplestopwatch.model.state;
 
 import edu.luc.etl.cs313.android.simplestopwatch.common.StopwatchModelListener;
 import edu.luc.etl.cs313.android.simplestopwatch.model.clock.ClockModel;
+import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContainer;
+import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.TimeModel;
 
 /**
@@ -14,11 +16,12 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     public DefaultStopwatchStateMachine(final TimeModel timeModel, final ClockModel clockModel) {
         this.timeModel = timeModel;
         this.clockModel = clockModel;
+        this.incrementingContainer = new DefaultTimerContainer(0);
     }
 
     private final TimeModel timeModel;
-
     private final ClockModel clockModel;
+    private BoundedContainer incrementingContainer;
     private final StopwatchState COUNTDOWN = new CountdownState(this);
 
     /**
@@ -47,7 +50,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     @Override public synchronized void onTick()      { state.onTick(); }
 
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
-    @Override public void updateUILaptime() { listener.onTimeUpdate(timeModel.getLaptime()); }
+    @Override public void updateUILaptime() { listener.onTimeUpdate(timeModel.getLaptime()); }//TODO may need removing.
 
     // known states
     private final StopwatchState STOPPED     = new StoppedState(this);
@@ -78,9 +81,12 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     }
 
     @Override public void actionStop()       { clockModel.stop(); }
-//    @Override public void actionLap()        { timeModel.setLaptime(); }
+//  @Override public void actionLap()        { timeModel.setLaptime(); }
     @Override public void actionInc()        {
         //should interact with the boundedcontainer from click counter.
-        timeModel.incRuntime(); actionUpdateView(); }
+        //timeModel.incRuntime();
+        incrementingContainer.increment();
+        timeModel.setRuntime(incrementingContainer.get());
+        actionUpdateView(); }
     @Override public void actionUpdateView() { state.updateView(); }
 }
