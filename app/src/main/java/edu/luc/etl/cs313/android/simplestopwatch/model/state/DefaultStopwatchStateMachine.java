@@ -23,7 +23,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     private int waitTime = 0;
     private final TimeModel timeModel;
     private final ClockModel clockModel;
-    private final BoundedContainer incrementingContainer;
+    private BoundedContainer incrementingContainer;
     private final StopwatchState COUNTDOWN = new CountdownState(this);
 
     /**
@@ -93,7 +93,14 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     // actions
     @Override public void actionInit()       { toStoppedState(); actionReset(); }
-    @Override public void actionReset()      { timeModel.resetRuntime(); actionUpdateView(); }
+    @Override
+    public void actionReset() {
+        timeModel.resetRuntime();
+        // resetting the increment container so when the timer is reset from running state
+        // via button click it starts from 0
+        incrementingContainer = new DefaultTimerContainer(0);
+        actionUpdateView();
+    }
     @Override public void actionStart()      { clockModel.start(); }
     @Override
     public void actionDec() {
