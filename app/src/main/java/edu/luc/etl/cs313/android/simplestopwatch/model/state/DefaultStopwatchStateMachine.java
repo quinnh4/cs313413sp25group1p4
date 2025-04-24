@@ -20,7 +20,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         this.incrementingContainer = new DefaultTimerContainer(0);
     }
 
-    private int waitCounter = 0;
+    private int waitTime = 0;
     private final TimeModel timeModel;
     private final ClockModel clockModel;
     private BoundedContainer incrementingContainer;
@@ -52,9 +52,9 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     @Override
     public synchronized void onTick() {
         state.onTick();
-        // handles wait counter for IncrementingState
+        // handles waitTime for IncrementingState
         if (state.getId() == R.string.INCREMENTING) {
-            if (--waitCounter <= 0) {
+            if (--waitTime <= 0) {
                 toRunningState();
             }
         }
@@ -76,12 +76,12 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     public void toIncrementingState() {
         setState(INCREMENTING);
         // intialize to 3 seconds
-        waitCounter = 3;
+        waitTime = 3;
     }
     @Override
-    public void resetWaitCounter() {
-        // reset counter when button pressed in incrementing state
-        waitCounter = 3;
+    public void resetWaitTime() {
+        // resets waitTime when button pressed in incrementing state
+        waitTime = 3;
     }
     @Override public void toAlarmingState() { setState(ALARMING); }
 

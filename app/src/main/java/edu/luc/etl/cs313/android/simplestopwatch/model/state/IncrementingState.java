@@ -24,8 +24,8 @@ public class IncrementingState implements StopwatchState {
     @Override
     public void onStartStop() {
         sm.actionInc();
-        // resets the counter in state machine
-        sm.resetWaitCounter();
+        // resets the waitTime in state machine
+        sm.resetWaitTime();
     }
 
     @Override
