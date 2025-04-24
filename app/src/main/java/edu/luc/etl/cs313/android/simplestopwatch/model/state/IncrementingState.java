@@ -30,5 +30,9 @@ public class IncrementingState implements StopwatchState {
 
     @Override
     public void onTick() {
+        sm.tickWaitTime();
+        if (sm.getWaitTime() <= 0) {
+            sm.toRunningState();
+        }
     }
 }

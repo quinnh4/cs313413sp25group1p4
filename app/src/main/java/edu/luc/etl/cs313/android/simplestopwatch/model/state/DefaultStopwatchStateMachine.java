@@ -49,15 +49,16 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     // these must be synchronized because events can come from the
     // UI thread or the timer thread
     @Override public synchronized void onStartStop() { state.onStartStop(); }
+
     @Override
     public synchronized void onTick() {
         state.onTick();
         // handles waitTime for IncrementingState
-        if (state.getId() == R.string.INCREMENTING) {
-            if (--waitTime <= 0) {
-                toRunningState();
-            }
-        }
+//        if (state.getId() == R.string.INCREMENTING) {
+//            if (--waitTime <= 0) {
+//                toRunningState();
+//            }
+//        }
     }
 
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
@@ -83,6 +84,10 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         // resets waitTime when button pressed in incrementing state
         waitTime = 3;
     }
+    @Override
+    public void tickWaitTime(){--waitTime;}
+    @Override
+    public int getWaitTime(){return waitTime;}
     @Override public void toAlarmingState() { setState(ALARMING); }
 
 
