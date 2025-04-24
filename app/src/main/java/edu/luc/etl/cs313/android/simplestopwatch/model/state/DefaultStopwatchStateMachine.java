@@ -23,7 +23,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     private int waitTime = 0;
     private final TimeModel timeModel;
     private final ClockModel clockModel;
-    private BoundedContainer incrementingContainer;
+    private final BoundedContainer incrementingContainer;
     private final StopwatchState COUNTDOWN = new CountdownState(this);
 
     /**
@@ -105,7 +105,8 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     public int getTime() {
         return timeModel.getRuntime();
     }
-
+    @Override
+    public boolean isContainerFull(){return incrementingContainer.isFull();}
     @Override public void actionStop()       { clockModel.stop(); }
 //  @Override public void actionLap()        { timeModel.setLaptime(); }
     @Override public void actionInc()        {

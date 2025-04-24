@@ -26,6 +26,7 @@ interface StopwatchSMStateView {
     void actionInc();
     void actionUpdateView();
     void tickWaitTime();
+    boolean isContainerFull();
     int getWaitTime();
     // state-dependent UI updates
     void updateUIRuntime();
