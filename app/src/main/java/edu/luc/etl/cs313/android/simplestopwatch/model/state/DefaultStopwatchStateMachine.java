@@ -5,6 +5,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.clock.ClockModel;
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContainer;
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.TimeModel;
+import edu.luc.etl.cs313.android.simplestopwatch.R;
 
 /**
  * An implementation of the state machine for the stopwatch.
@@ -19,6 +20,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         this.incrementingContainer = new DefaultTimerContainer(0);
     }
 
+    private int waitCounter = 0;
     private final TimeModel timeModel;
     private final ClockModel clockModel;
     private BoundedContainer incrementingContainer;
@@ -47,7 +49,16 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     // these must be synchronized because events can come from the
     // UI thread or the timer thread
     @Override public synchronized void onStartStop() { state.onStartStop(); }
-    @Override public synchronized void onTick()      { state.onTick(); }
+    @Override
+    public synchronized void onTick() {
+        state.onTick();
+        // handles wait counter for IncrementingState
+        if (state.getId() == R.string.INCREMENTING) {
+            if (--waitCounter <= 0) {
+                toRunningState();
+            }
+        }
+    }
 
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
     @Override public void updateUILaptime() { listener.onTimeUpdate(timeModel.getLaptime()); }//TODO may need removing.
@@ -61,7 +72,17 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     // transitions
     @Override public void toRunningState()    { setState(RUNNING); }
     @Override public void toStoppedState()    { setState(STOPPED); }
-    @Override public void toIncrementingState() { setState(INCREMENTING); }
+    @Override
+    public void toIncrementingState() {
+        setState(INCREMENTING);
+        // intialize to 3 seconds
+        waitCounter = 3;
+    }
+    @Override
+    public void resetWaitCounter() {
+        // reset counter when button pressed in incrementing state
+        waitCounter = 3;
+    }
     @Override public void toAlarmingState() { setState(ALARMING); }
 
 
