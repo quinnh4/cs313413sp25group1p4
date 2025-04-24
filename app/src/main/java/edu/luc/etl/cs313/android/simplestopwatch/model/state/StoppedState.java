@@ -17,8 +17,9 @@ public class StoppedState implements StopwatchState {
 //            sm.toCountdownState();
 //            sm.actionStart();
 //        } else {
-            sm.actionStart();
-            sm.toIncrementingState();
+        sm.actionReset();
+        sm.actionStart();
+        sm.toIncrementingState();
 
     }
 //
