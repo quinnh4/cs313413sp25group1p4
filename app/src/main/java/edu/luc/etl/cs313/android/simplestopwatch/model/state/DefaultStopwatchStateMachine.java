@@ -64,11 +64,11 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
         state.onTick();
         if(state.getId() == R.string.STOPPED){
-            alarmSound.play();
+            playAlarm();
         }
         // handles waitTime for IncrementingState
         if (state.getId() == R.string.COUNTDOWN && i == true) {
-            alarmSound.play();
+            playAlarm();
             i = false; // makes it so alarm doesnt beep eevery second in countsdown
 //           if (--waitTime == 00) {
 //              toRunningState();
@@ -138,7 +138,8 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         timeModel.decRuntime();
         actionUpdateView();
     }
-
+    @Override
+    public void playAlarm(){alarmSound.play();}
     @Override
     public int getTime() {
         return timeModel.getRuntime();
