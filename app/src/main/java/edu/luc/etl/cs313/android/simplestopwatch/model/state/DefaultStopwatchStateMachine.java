@@ -26,8 +26,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     private int waitTime = 0;
     private final TimeModel timeModel;
-    private boolean i = true;
-    //sound
+    //manages sound
     private soundManager alarmSound;
     private final ClockModel clockModel;
     private BoundedContainer incrementingContainer;
@@ -61,21 +60,9 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     @Override
     public synchronized void onTick() {
-
         state.onTick();
-        if(state.getId() == R.string.STOPPED){
-            playAlarm();
-        }
-        // handles waitTime for IncrementingState
-        if (state.getId() == R.string.COUNTDOWN && i == true) {
-            playAlarm();
-            i = false; // makes it so alarm doesnt beep eevery second in countsdown
-//           if (--waitTime == 00) {
-//              toRunningState();
-//              alarmSound.play();
-//           }
-        }
     }
+
 
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
     @Override public void updateUILaptime() { listener.onTimeUpdate(timeModel.getLaptime()); }//TODO may need removing.
@@ -89,22 +76,20 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     // transitions
     @Override public void toRunningState()    {
-
         setState(RUNNING); }
     @Override public void toStoppedState()    {
         setState(STOPPED);
-
-        clockModel.stop();//this fixed the fast decrement after the first tryy
+        //clockModel.stop();//this fixed the fast decrement after the first tryy
 
     }
     @Override
     public void toIncrementingState() {
-        clockModel.stop();
-        timeModel.setRuntime(3);
-        updateUIRuntime();
+//        clockModel.stop();
+//        timeModel.setRuntime(3);
+//        updateUIRuntime();
         setState(INCREMENTING);
-        clockModel.start();
-        i = true;
+//        clockModel.start();
+//        i = true;
         // intialize to 3 seconds
         waitTime = 3;
         timeModel.resetRuntime();
@@ -123,7 +108,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
 
     // actions
-    @Override public void actionInit()       { toStoppedState(); actionReset(); }
+    @Override public void actionInit() { toStoppedState(); actionReset(); }
     @Override
     public void actionReset() {
         timeModel.resetRuntime();
@@ -132,25 +117,28 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         incrementingContainer = new DefaultTimerContainer(0);
         actionUpdateView();
     }
-    @Override public void actionStart()      { clockModel.start(); }
+    @Override public void actionStart() { clockModel.start(); }
     @Override
     public void actionDec() {
         timeModel.decRuntime();
         actionUpdateView();
     }
     @Override
-    public void playAlarm(){alarmSound.play();}
+    public void playAlarm(){
+        alarmSound.play();
+    }
+
+
     @Override
     public int getTime() {
         return timeModel.getRuntime();
     }
     @Override
     public boolean isContainerFull(){return incrementingContainer.isFull();}
-    @Override public void actionStop()       { clockModel.stop(); }
-//  @Override public void actionLap()        { timeModel.setLaptime(); }
-    @Override public void actionInc()        {
+    @Override public void actionStop() { clockModel.stop(); }
+
+    @Override public void actionInc() {
         //should interact with the boundedcontainer from click counter.
-        //timeModel.incRuntime();
         incrementingContainer.increment();
         timeModel.setRuntime(incrementingContainer.get());
         actionUpdateView(); }
