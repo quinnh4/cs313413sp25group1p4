@@ -4,8 +4,11 @@ import edu.luc.etl.cs313.android.simplestopwatch.common.StopwatchModelListener;
 import edu.luc.etl.cs313.android.simplestopwatch.model.clock.ClockModel;
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContainer;
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
+import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.TimeModel;
+import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
 import edu.luc.etl.cs313.android.simplestopwatch.R;
+import android.content.Context;
 
 /**
  * An implementation of the state machine for the stopwatch.
@@ -14,14 +17,18 @@ import edu.luc.etl.cs313.android.simplestopwatch.R;
  */
 public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
-    public DefaultStopwatchStateMachine(final TimeModel timeModel, final ClockModel clockModel) {
+    public DefaultStopwatchStateMachine(final TimeModel timeModel, final ClockModel clockModel, Context context) {
         this.timeModel = timeModel;
         this.clockModel = clockModel;
         this.incrementingContainer = new DefaultTimerContainer(0);
+        this.alarmSound = new soundManager(context);
     }
 
     private int waitTime = 0;
     private final TimeModel timeModel;
+    private boolean i = true;
+    //sound
+    private soundManager alarmSound;
     private final ClockModel clockModel;
     private BoundedContainer incrementingContainer;
     private final StopwatchState COUNTDOWN = new CountdownState(this);
@@ -54,13 +61,20 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     @Override
     public synchronized void onTick() {
+
         state.onTick();
+        if(state.getId() == R.string.STOPPED){
+            alarmSound.play();
+        }
         // handles waitTime for IncrementingState
-//        if (state.getId() == R.string.INCREMENTING) {
-//            if (--waitTime <= 0) {
-//                toRunningState();
-//            }
-//        }
+        if (state.getId() == R.string.COUNTDOWN && i == true) {
+            alarmSound.play();
+            i = false; // makes it so alarm doesnt beep eevery second in countsdown
+//           if (--waitTime == 00) {
+//              toRunningState();
+//              alarmSound.play();
+//           }
+        }
     }
 
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
@@ -78,8 +92,11 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     @Override
     public void toIncrementingState() {
         setState(INCREMENTING);
+        i = true;
         // intialize to 3 seconds
         waitTime = 3;
+        timeModel.resetRuntime();
+        actionUpdateView();
     }
     @Override
     public void resetWaitTime() {

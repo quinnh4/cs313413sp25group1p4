@@ -1,7 +1,8 @@
 package edu.luc.etl.cs313.android.simplestopwatch.model.time;
 
 import static edu.luc.etl.cs313.android.simplestopwatch.common.Constants.*;
-
+import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
+import android.content.Context;
 /**
  * An implementation of the stopwatch data model.
  */
@@ -10,6 +11,7 @@ public class DefaultTimeModel implements TimeModel {
     private int runningTime = 0;
 
     private int lapTime = -1;
+
 
     @Override
     public void resetRuntime() {
