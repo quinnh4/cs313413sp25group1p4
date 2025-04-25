@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+
 /**
  * Concrete testcase subclass for the default stopwatch state machine
  * implementation.
