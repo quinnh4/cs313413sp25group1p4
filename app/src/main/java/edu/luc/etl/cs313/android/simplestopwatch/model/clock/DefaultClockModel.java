@@ -35,7 +35,7 @@ public class DefaultClockModel implements ClockModel {
     }
 
     @Override
-    public void stop() {
+    public void stop() { //fixed for decrement issue
         if (timer != null) {
             timer.cancel();
             timer = null;

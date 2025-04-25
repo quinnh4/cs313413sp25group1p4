@@ -93,7 +93,8 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         setState(RUNNING); }
     @Override public void toStoppedState()    {
         setState(STOPPED);
-        clockModel.stop();//this fixed the fast decrement after the first try
+
+        clockModel.stop();//this fixed the fast decrement after the first tryy
 
     }
     @Override
