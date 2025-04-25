@@ -32,7 +32,8 @@ public class IncrementingState implements StopwatchState {
     public void onTick() {
         sm.tickWaitTime();
         if (sm.getWaitTime() <= 0 || sm.isContainerFull()) {
-            sm.toCountdownState();
+            sm.playAlarm();//play alarm when timer starts ticking
+            sm.toCountdownState(); //TODO replace with runningstate in future.
         }
     }
 }

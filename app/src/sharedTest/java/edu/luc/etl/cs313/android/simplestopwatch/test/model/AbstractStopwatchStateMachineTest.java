@@ -30,6 +30,8 @@ public abstract class AbstractStopwatchStateMachineTest {
 
     private UnifiedMockDependency dependency;
 
+
+
     @Before
     public void setUp() throws Exception {
         dependency = new UnifiedMockDependency();

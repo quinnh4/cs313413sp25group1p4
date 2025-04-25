@@ -35,10 +35,8 @@ public class DefaultClockModel implements ClockModel {
     }
 
     @Override
-    public void stop() { //fixed for decrement issue
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+    public void stop() { //called again when leaving alarming for decrement issue
+        timer.cancel();
         }
-    }
+
 }

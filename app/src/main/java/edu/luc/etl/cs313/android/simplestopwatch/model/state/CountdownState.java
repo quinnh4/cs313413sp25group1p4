@@ -16,19 +16,15 @@ public class CountdownState implements StopwatchState {
         sm.actionReset();
         sm.toStoppedState();
     }
-//
-//    @Override
-//    public void onLapReset() {
-//        sm.actionReset();
-//        sm.toStoppedState();
-//    }
+
 
     @Override
     public void onTick() {
         sm.actionDec();
-        sm.updateUIRuntime();
+        sm.toCountdownState();//replace with running in runningstate.
         if (sm.getTime() == 0) {
-            sm.toStoppedState();
+            sm.playAlarm();
+            sm.toAlarmingState();
         }
     }
 
