@@ -20,18 +20,17 @@ import android.content.Context;
 public class ConcreteStopwatchModelFacade implements StopwatchModelFacade {
 
     private final StopwatchStateMachine stateMachine;
-    //private final BoundedContainer incrementContainer;//bounded container added to facade to control incremementing.
-    //adding it to incrementing state instead?
     private final ClockModel clockModel;
 
     private final TimeModel timeModel;
+
 
     public ConcreteStopwatchModelFacade(Context context) {
         timeModel = new DefaultTimeModel();
         clockModel = new DefaultClockModel();
         stateMachine = new DefaultStopwatchStateMachine(timeModel, clockModel, context);
         clockModel.setTickListener(stateMachine);
-        //incrementContainer = new DefaultTimerContainer(0);
+
     }
 
     @Override

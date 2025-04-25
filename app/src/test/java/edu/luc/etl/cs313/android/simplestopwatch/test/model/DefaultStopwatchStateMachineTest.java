@@ -1,5 +1,6 @@
 package edu.luc.etl.cs313.android.simplestopwatch.test.model;
 
+import android.content.Context;
 import org.junit.After;
 import org.junit.Before;
 
@@ -21,7 +22,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        setModel(new DefaultStopwatchStateMachine(getDependency(), getDependency()));
+        Context c = null;
+        setModel(new DefaultStopwatchStateMachine(getDependency(), getDependency(), c));
     }
 
     @After
