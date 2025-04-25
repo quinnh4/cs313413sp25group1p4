@@ -130,19 +130,13 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
 
     @Test
     public void testDecrement() {
-        // setting this method in place until we add new methods for decrementing
         // setting initial time to 5 seconds
-        for (int i = 0; i < 5; i++) {
-            getModel().onStartStop();
-            getModel().onTick();
+        for (int i = 0; i < 6; i++) {
             getModel().onStartStop();
         }
         assertTimeEquals(5);
 
-        // need to add methods to actually decrement
-        getModel().onStartStop();
-        getModel().onStartStop(); //To countdown
-        // decrement by 1
+        onTickRepeat(3);
         getModel().onTick();
         // verify time decremented by 1
         assertTimeEquals(4);
@@ -151,12 +145,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     @Test
     public void testMaximumTimer() {
         // increment to 99
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < 100; i++) {
             // start timer
-            getModel().onStartStop();
-            // adding seconds
-            getModel().onTick();
-            // stop timer
             getModel().onStartStop();
         }
         // verify that maximum time is reached
@@ -165,14 +155,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         // attempt to increment past 99
         // again, start timer
         getModel().onStartStop();
-        // attempt to increment
-        getModel().onTick();
-        // stop timer
-        getModel().onStartStop();
         // verify runningTime is still 99
         assertTimeEquals(99);
-        // could maybe do boolean to verify it cannot exceed 99?
-        //assertTrue("Exceeds 99 seconds", getDependency().getTime() <= 99);
     }
 
     @Test
