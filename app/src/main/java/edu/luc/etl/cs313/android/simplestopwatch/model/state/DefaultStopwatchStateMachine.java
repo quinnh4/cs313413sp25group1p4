@@ -36,7 +36,9 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         listener.onStateUpdate(state.getId());
     }
 
-    @Override public void toCountdownState() { setState(COUNTDOWN); }
+    @Override public void toCountdownState() {
+        setState(COUNTDOWN);
+    }
 
     private StopwatchModelListener listener;
 

@@ -13,6 +13,7 @@ public class CountdownState implements StopwatchState {
     @Override
     public void onStartStop() {
         sm.actionStop();
+        sm.actionReset();
         sm.toStoppedState();
     }
 //
@@ -26,6 +27,9 @@ public class CountdownState implements StopwatchState {
     public void onTick() {
         sm.actionDec();
         sm.updateUIRuntime();
+        if (sm.getTime() == 0) {
+            sm.toStoppedState();
+        }
     }
 
     @Override

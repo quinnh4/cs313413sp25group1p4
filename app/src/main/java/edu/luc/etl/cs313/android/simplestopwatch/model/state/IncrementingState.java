@@ -5,9 +5,9 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContaine
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
 
 public class IncrementingState implements StopwatchState {
-    private final StopwatchSMStateView sm;
+    private final StopwatchStateMachine sm;
 
-    public IncrementingState(final StopwatchSMStateView sm) {
+    public IncrementingState(final StopwatchStateMachine sm) {
         this.sm = sm;
     }
 
@@ -32,7 +32,7 @@ public class IncrementingState implements StopwatchState {
     public void onTick() {
         sm.tickWaitTime();
         if (sm.getWaitTime() <= 0 || sm.isContainerFull()) {
-            sm.toRunningState();
+            sm.toCountdownState();
         }
     }
 }
