@@ -36,6 +36,9 @@ public class DefaultClockModel implements ClockModel {
 
     @Override
     public void stop() {
-        timer.cancel();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 }

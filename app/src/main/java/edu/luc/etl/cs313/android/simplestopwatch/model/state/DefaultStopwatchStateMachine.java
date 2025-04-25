@@ -86,12 +86,23 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     private final StopwatchState INCREMENTING = new IncrementingState(this);
     private final StopwatchState ALARMING = new AlarmingState(this);
 
+
     // transitions
-    @Override public void toRunningState()    { setState(RUNNING); }
-    @Override public void toStoppedState()    { setState(STOPPED); }
+    @Override public void toRunningState()    {
+
+        setState(RUNNING); }
+    @Override public void toStoppedState()    {
+        setState(STOPPED);
+        clockModel.stop();//this fixed the fast decrement after the first try
+
+    }
     @Override
     public void toIncrementingState() {
+        clockModel.stop();
+        timeModel.setRuntime(3);
+        updateUIRuntime();
         setState(INCREMENTING);
+        clockModel.start();
         i = true;
         // intialize to 3 seconds
         waitTime = 3;
