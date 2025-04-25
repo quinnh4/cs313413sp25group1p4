@@ -30,7 +30,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     private soundManager alarmSound;
     private final ClockModel clockModel;
     private BoundedContainer incrementingContainer;
-    private final StopwatchState COUNTDOWN = new CountdownState(this);
+
 
     /**
      * The internal state of this adapter component. Required for the State pattern.
@@ -69,6 +69,8 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
 
     // known states
     private final StopwatchState STOPPED     = new StoppedState(this);
+    //TODO rename countdown to running, to match UML
+    private final StopwatchState COUNTDOWN = new CountdownState(this);
     private final StopwatchState RUNNING     = new RunningState(this);
     private final StopwatchState INCREMENTING = new IncrementingState(this);
     private final StopwatchState ALARMING = new AlarmingState(this);
@@ -84,12 +86,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     }
     @Override
     public void toIncrementingState() {
-//        clockModel.stop();
-//        timeModel.setRuntime(3);
-//        updateUIRuntime();
         setState(INCREMENTING);
-//        clockModel.start();
-//        i = true;
         // intialize to 3 seconds
         waitTime = 3;
         timeModel.resetRuntime();

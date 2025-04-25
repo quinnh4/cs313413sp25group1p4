@@ -23,6 +23,7 @@ public class CountdownState implements StopwatchState {
         sm.actionDec();
         sm.toCountdownState();//replace with running in runningstate.
         if (sm.getTime() == 0) {
+            sm.playAlarm();
             sm.toAlarmingState();
         }
     }
