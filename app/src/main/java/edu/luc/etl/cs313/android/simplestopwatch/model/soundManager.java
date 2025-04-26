@@ -13,6 +13,12 @@ public class soundManager {
     }
 
     public void play() {
+
+        if (context == null) {//added this because tests error occur. "java.lang.NullPointerException: Cannot invoke "android.content.Context.getAssets()" because "this.context" is null"
+
+            System.out.println("SoundManager: No context, skipping sound.");
+            return;
+        }
         try {
             AssetFileDescriptor afd = context.getAssets().openFd("beep-06.mp3");
             mediaPlayer = new MediaPlayer();
