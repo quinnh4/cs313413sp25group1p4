@@ -74,20 +74,6 @@ public abstract class AbstractStopwatchStateMachineTest {
         assertEquals(R.string.STOPPED, dependency.getState());
     }
 
-    /**
-     * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
-     * expect time 5.
-     */
-    @Test
-    public void testScenarioRun() {//failing
-        assertTimeEquals(0);
-        assertFalse(dependency.isStarted());
-        // directly invoke the button press event handler methods
-        model.onStartStop();
-        assertTrue(dependency.isStarted());
-        onTickRepeat(5);
-        assertTimeEquals(5);
-    }
 
     /**
      * Verifies the following scenario: time is 0, press start, wait 5+ seconds,

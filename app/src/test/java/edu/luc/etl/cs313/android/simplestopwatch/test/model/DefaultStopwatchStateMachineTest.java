@@ -41,19 +41,10 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         for (int i = 0; i < 99; i++) {
             getModel().onStartStop();
         }
-
         assertEquals(99, getDependency().getRuntime());
+        getModel().onTick(); // 99 → running state
 
-        // DON'T simulate ticking manually yet.
-        // Instead, simulate that waitTime has expired.
-
-        for (int i = 0; i < 3; i++) {
-            getModel().onTick(); // decrement waitTime only
-        }
-
-        // Now we should be in countdown state.
-        // First countdown tick
-        getModel().onTick(); // 99 → 98
+        getModel().onTick(); //99 → 98 first tick of timer
         assertEquals(98, getDependency().getRuntime());
 
         // Second countdown tick

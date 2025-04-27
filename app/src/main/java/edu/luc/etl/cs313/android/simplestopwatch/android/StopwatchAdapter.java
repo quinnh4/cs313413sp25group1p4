@@ -1,5 +1,5 @@
 package edu.luc.etl.cs313.android.simplestopwatch.android;
-import edu.luc.etl.cs313.android.simplestopwatch.model.state.StopwatchStateMachine;
+
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import edu.luc.etl.cs313.android.simplestopwatch.common.Constants;
 import edu.luc.etl.cs313.android.simplestopwatch.common.StopwatchModelListener;
 import edu.luc.etl.cs313.android.simplestopwatch.model.ConcreteStopwatchModelFacade;
 import edu.luc.etl.cs313.android.simplestopwatch.model.StopwatchModelFacade;
-import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
+
 
 /**
  * A thin adapter component for the stopwatch.

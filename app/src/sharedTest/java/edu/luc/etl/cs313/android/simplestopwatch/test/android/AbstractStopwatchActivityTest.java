@@ -76,6 +76,7 @@ public abstract class AbstractStopwatchActivityTest {
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
+            assertTrue(getStartStopButton().performClick());
         });
         Thread.sleep(3500); // <-- do not run this in the UI thread!
         runUiThreadTasks();
