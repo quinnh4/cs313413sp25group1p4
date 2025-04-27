@@ -56,11 +56,16 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     // forward event uiUpdateListener methods to the current state
     // these must be synchronized because events can come from the
     // UI thread or the timer thread
-    @Override public synchronized void onStartStop() { state.onStartStop(); }
+    @Override public synchronized void onStartStop() {
+        state.onStartStop();
+
+    }
 
     @Override
     public synchronized void onTick() {
+
         state.onTick();
+
     }
 
 
@@ -123,6 +128,9 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     @Override
     public void playAlarm(){
         alarmSound.play();
+    }
+    public boolean isAlarmOn() {
+        return alarmSound.isAlarmOn();
     }
 
 

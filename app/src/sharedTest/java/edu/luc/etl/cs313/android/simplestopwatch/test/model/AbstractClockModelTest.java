@@ -40,7 +40,7 @@ public abstract class AbstractClockModelTest {
      * @throws InterruptedException
      */
     @Test
-    public void testStopped() throws InterruptedException {
+    public void testStopped() throws InterruptedException {//passing
         // use a thread-safe object because the timer inside the
         // clock has its own thread
         final var i = new AtomicInteger(0);
@@ -55,7 +55,7 @@ public abstract class AbstractClockModelTest {
      * @throws InterruptedException
      */
     @Test
-    public void testRunning() throws InterruptedException {
+    public void testRunning() throws InterruptedException {//passing
         final var i = new AtomicInteger(0);
         model.setTickListener(i::incrementAndGet);
         model.start();

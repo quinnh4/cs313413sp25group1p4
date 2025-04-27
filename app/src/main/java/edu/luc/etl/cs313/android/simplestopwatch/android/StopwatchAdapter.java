@@ -1,4 +1,5 @@
 package edu.luc.etl.cs313.android.simplestopwatch.android;
+import edu.luc.etl.cs313.android.simplestopwatch.model.state.StopwatchStateMachine;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -32,6 +33,11 @@ public class StopwatchAdapter extends Activity implements StopwatchModelListener
     protected void setModel(final StopwatchModelFacade model) {
         this.model = model;
     }
+
+
+
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

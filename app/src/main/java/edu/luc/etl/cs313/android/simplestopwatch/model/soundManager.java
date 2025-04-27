@@ -7,9 +7,14 @@ import android.media.MediaPlayer; //plays the mp3
 public class soundManager {
     private final Context context;
     private MediaPlayer mediaPlayer;
+    private boolean alarmOn = false;
 
     public soundManager(Context context) {
         this.context = context;
+    }
+
+    public boolean isAlarmOn() {
+        return alarmOn;
     }
 
     public void play() {
@@ -31,6 +36,7 @@ public class soundManager {
             mediaPlayer.prepare();
             mediaPlayer.setOnCompletionListener(MediaPlayer::release);
             mediaPlayer.start();
+            alarmOn = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,5 +48,6 @@ public class soundManager {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        alarmOn = false;
     }
 }

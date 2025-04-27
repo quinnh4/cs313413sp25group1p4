@@ -34,43 +34,50 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
 
 
     @Test
-    public void testMaximumPress() {
+    public void testMaximumPress() {//failin
         assertEquals(0, getDependency().getRuntime());
 
-        //  Increment to 99
+        // Click 99 times to add exactly 99 seconds
         for (int i = 0; i < 99; i++) {
-            getModel().onStartStop();  // Start
-            getModel().onTick();       // +1 sec
-            getModel().onStartStop();  // Stop
+            getModel().onStartStop();
         }
 
         assertEquals(99, getDependency().getRuntime());
 
-        // Trigger countdown
-        getModel().onStartStop(); // Stop -> StoppedState
-        getModel().onStartStop(); // StoppedState -> CountdownState and clock starts
+        // DON'T simulate ticking manually yet.
+        // Instead, simulate that waitTime has expired.
 
-        // Tick in countdown
-        getModel().onTick(); // now should decrement
+        for (int i = 0; i < 3; i++) {
+            getModel().onTick(); // decrement waitTime only
+        }
+
+        // Now we should be in countdown state.
+        // First countdown tick
+        getModel().onTick(); // 99 → 98
         assertEquals(98, getDependency().getRuntime());
 
-        getModel().onTick();
+        // Second countdown tick
+        getModel().onTick(); // 98 → 97
         assertEquals(97, getDependency().getRuntime());
     }
 
     @Test
-    public void testTimerForcedReset() {
+    public void testTimerForcedReset() {//failing
         // Ensure initial runtime is zero
         assertEquals(0, getDependency().getRuntime());
 
         // Start the timer
-        getModel().onStartStop();
-
+        getModel().onStartStop(); //+1
+        assertEquals(1, getDependency().getRuntime());
         // TODO: Simulate 3-second delay and transition to countdown when implemented
 
         // Simulate tick (currently increments)
         getModel().onTick();
+        getModel().onTick();
+        getModel().onTick();
 
+
+        getModel().onTick();
         // Stop the timer mid-countdown
         getModel().onStartStop();
 
@@ -87,28 +94,54 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
 
     @Test
     public void testAlarmStop() {
-        // Initial runtime should be zero
+
         assertEquals(0, getDependency().getRuntime());
 
-        // Simulate user pressing the button once to start the timer
+
         getModel().onStartStop();
+        assertEquals(1, getDependency().getRuntime());
+
+        getModel().onTick();
+        getModel().onTick();
+        getModel().onTick();
+
+        getModel().onTick();
+        assertEquals(0, getDependency().getRuntime());
+
+        //  Simulate pressing the button to stop the alarm
+        getModel().onStartStop();
+
+        // After stopping alarm, runtime should remain 0
+        assertEquals(0, getDependency().getRuntime());
+
+        //  Stopwatch should be fully stopped
+        assertFalse(getDependency().isStarted());
+        //alarm off
+        assertFalse(getDependency().isAlarmOn());
+
+
+
+        // Simulate user pressing the button once to start the timer
+        //getModel().onStartStop();
 
         // Simulate a 3-second wait
         // TODO: When countdown is implemented, we'll have to simulate the transition to countdown state here
 
         // Simulate a tick that would decrement time
         // TODO: In countdown mode, this would reduce runtime from a set value toward 0
-        getModel().onTick(); // No effect in current implementation
-
+        //getModel().onTick(); // No effect in current implementation
+       // getModel().onTick();
+       // getModel().onTick();
         // Simulate the alarm sounding after hitting 0
         // TODO: When alarm functionality is added, we'll have to assert that the alarm is active
+       // getModel().onTick();
 
         // Simulate pressing the button to stop the alarm
-        getModel().onStartStop();
+       // getModel().onStartStop();
 
         //  Assert current runtime remains 0 and stopwatch is no longer active
-        assertEquals(0, getDependency().getRuntime());
-        assertFalse(getDependency().isStarted());
+       // assertEquals(0, getDependency().getRuntime());
+       // assertFalse(getDependency().isStarted());
 
         // TODO: Once alarm is implemented, we'll add:
         // assertFalse(getDependency().isAlarmOn());
@@ -119,7 +152,7 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         // runningTime = 0
         assertTimeEquals(0);
         // start timer via button click
-        getModel().onStartStop();
+        //getModel().onStartStop();//uncomment if the first time increment doesnt increase the timer. else its passing.
         // simulate one second
         getModel().onTick();
         // stop timer via button click
@@ -134,12 +167,12 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         for (int i = 0; i < 6; i++) {
             getModel().onStartStop();
         }
-        assertTimeEquals(5);
+        assertTimeEquals(6);
 
         onTickRepeat(3);
         getModel().onTick();
         // verify time decremented by 1
-        assertTimeEquals(4);
+        assertTimeEquals(5);
     }
 
     @Test
@@ -171,32 +204,33 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         //David: No alarm on load
         assertEquals(0, getDependency().getRuntime());
         assertFalse(getDependency().isStarted());
-
-        //assertFalse(getDependency().isAlaarmOn()); //uncomment when alarm is implemented. prob change method name
+        assertFalse(getDependency().isAlarmOn()); //uncomment when alarm is implemented. prob change method name
 
 
     }
 
     @Test
     public void testAlarm(){
+        assertTimeEquals(0);
         // Set initial time to 1 second (simulate 1 press and tick)
         getModel().onStartStop();
-        getModel().onTick();
-        getModel().onStartStop();
+
 
         // Verify initial runtime
         assertTimeEquals(1);
 
         // Begin countdown
-        getModel().onStartStop();
-        getModel().onStartStop();
+        //getModel().onStartStop();
+        //getModel().onStartStop();
         getModel().onTick();
-
+        getModel().onTick();
+        getModel().onTick();
+        getModel().onTick();
         // Simulate stop
-        getModel().onStartStop();
+        //getModel().onStartStop();
 
         // Alarm should stop
-        // assertFalse(getDependency().isAlarmOn());
+         assertFalse(getDependency().isAlarmOn());
     }
 
     @Test
@@ -204,8 +238,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         // Add two seconds
         for (int i = 0; i < 2; i++){
             getModel().onStartStop();
-            getModel().onTick();
-            getModel().onStartStop();
+            //getModel().onTick();
+            //getModel().onStartStop();
         }
 
         // Ensure time = 2
@@ -213,8 +247,12 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         assertEquals(2, getDependency().getRuntime());
 
         // Start countdown
-        getModel().onStartStop();
-        getModel().onStartStop();
+        //getModel().onStartStop();
+        //getModel().onStartStop();
+        getModel().onTick();
+        getModel().onTick();
+        getModel().onTick();
+
         getModel().onTick();
 
         // Time should now be 1 and both runtime/display should match

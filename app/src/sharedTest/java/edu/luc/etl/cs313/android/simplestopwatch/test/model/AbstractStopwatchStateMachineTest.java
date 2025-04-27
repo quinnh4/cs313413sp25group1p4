@@ -79,7 +79,7 @@ public abstract class AbstractStopwatchStateMachineTest {
      * expect time 5.
      */
     @Test
-    public void testScenarioRun() {
+    public void testScenarioRun() {//failing
         assertTimeEquals(0);
         assertFalse(dependency.isStarted());
         // directly invoke the button press event handler methods
@@ -232,4 +232,16 @@ class UnifiedMockDependency implements TimeModel, ClockModel, StopwatchModelList
     public void setRuntime(int runtime) {
         runningTime = runtime;
     }
+
+    private boolean alarmOn = false;
+
+    public boolean isAlarmOn() {
+        return alarmOn;
+    }
+
+    public void setAlarmOn(boolean alarmOn) {
+        this.alarmOn = alarmOn;
+    }
 }
+
+

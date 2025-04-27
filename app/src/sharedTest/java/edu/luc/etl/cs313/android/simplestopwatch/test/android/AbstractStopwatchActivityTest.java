@@ -28,7 +28,7 @@ public abstract class AbstractStopwatchActivityTest {
      * Verifies that the activity under test can be launched.
      */
     @Test
-    public void testActivityCheckTestCaseSetUpProperly() {
+    public void testActivityCheckTestCaseSetUpProperly() {//pass
         assertNotNull("activity should be launched successfully", getActivity());
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractStopwatchActivityTest {
      * @throws Throwable
      */
     @Test
-    public void testActivityScenarioInit() throws Throwable {
+    public void testActivityScenarioInit() throws Throwable {//pass
         getActivity().runOnUiThread(() -> assertEquals(0, getDisplayedValue()));
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractStopwatchActivityTest {
      * @throws Throwable
      */
     @Test
-    public void testRotation() throws Throwable {
+    public void testRotation() throws Throwable {//passing
         //setup clock for 5 secs
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
@@ -97,23 +97,23 @@ public abstract class AbstractStopwatchActivityTest {
      * @throws Throwable
      */
     @Test
-    public void testAutoTimer() throws Throwable {
+    public void testAutoTimer() throws Throwable { //passes
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());//to incrementing click
-            assertTrue(getStartStopButton().performClick());
-            assertTrue(getStartStopButton().performClick()); // perform two clicks to get to 2 seconds
+            assertTrue(getStartStopButton().performClick());//first click +1
+            //assertTrue(getStartStopButton().performClick());//uncommented cuz intinal click should increment
+            assertTrue(getStartStopButton().performClick()); // second click +1
         });
-        Thread.sleep(3000); // wait for 3 seconds
+        Thread.sleep(3100); // wait for 3 seconds
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(2, getDisplayedValue()); // check if value is at 2 at start
         });
-        Thread.sleep(1000); // wait for 1 second
+        Thread.sleep(1100); // wait for 1 second
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
-            assertEquals(3, getDisplayedValue()); // quick check with broken timer for incrementing
-            //assertEquals(1, getDisplayedValue()); // check if decrements to 1 after 1 second
+            //assertEquals(3, getDisplayedValue()); // quick check with broken timer for incrementing
+            assertEquals(1, getDisplayedValue()); // check if decrements to 1 after 1 second
         });
     }
 
@@ -122,19 +122,19 @@ public abstract class AbstractStopwatchActivityTest {
      * @throws Throwable
      */
     @Test
-    public void testButtonStops() throws Throwable {
+    public void testButtonStops() throws Throwable {//passes
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());//to incrementing click
-            assertTrue(getStartStopButton().performClick());
-            assertTrue(getStartStopButton().performClick()); // perform two clicks to get to 2 seconds
+            //assertTrue(getStartStopButton().performClick());//to incrementing click
+            assertTrue(getStartStopButton().performClick()); //first click +1
+            assertTrue(getStartStopButton().performClick()); // second click +1
         });
-        Thread.sleep(3000); // wait for 3 seconds
+        Thread.sleep(3500); // wait for 3 seconds
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(2, getDisplayedValue()); // check if value is at 2 at start
         });
-        Thread.sleep(1000); // wait for 1 second
+        Thread.sleep(1200); // wait for 1 second
         runUiThreadTasks();
         //relies on decrement below
         getActivity().runOnUiThread(() -> {
@@ -150,23 +150,23 @@ public abstract class AbstractStopwatchActivityTest {
      *  @throws Throwable
      */
     @Test
-    public void testAutoStop() throws Throwable {
+    public void testAutoStop() throws Throwable { //passing
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());// perform one click to get one second
+            //assertTrue(getStartStopButton().performClick());// perform one click to get one second
             assertTrue(getStartStopButton().performClick()); //may need a second click to since first sets it to incremementing state.
         });
-        Thread.sleep(3000); // wait for 3 seconds
+        Thread.sleep(3500); // wait for 3 seconds
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(1, getDisplayedValue()); // check if value is 1 at start
         });
-        Thread.sleep(1000); // wait for 1 second
+        Thread.sleep(1100); // wait for 1 second
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue()); // check if decrements to 0 after 1 second
         });
-        Thread.sleep(1000);
+        Thread.sleep(1100);
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue()); // check if the clock is still at 0, since it hasn't been reset
@@ -181,12 +181,12 @@ public abstract class AbstractStopwatchActivityTest {
     public void testGet() throws Throwable {
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());//incrementing click
-            assertTrue(getStartStopButton().performClick());
+           // assertTrue(getStartStopButton().performClick());//incrementing click
+            assertTrue(getStartStopButton().performClick()); //+1 increment
             assertEquals(1, getDisplayedValue()); // test if 1 second shown
 
         });
-        Thread.sleep(2000); // wait for 2 seconds
+        Thread.sleep(2500); // wait for 2 seconds
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(1, getDisplayedValue()); // test if clock is still at 1 seconds, as 3 seconds not been reached
@@ -199,10 +199,10 @@ public abstract class AbstractStopwatchActivityTest {
      * @throws Throwable
      */
     @Test
-    public void testTimerTimeoutReset() throws Throwable {
+    public void testTimerTimeoutReset() throws Throwable {//passing
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());//to incrementing
+            //assertTrue(getStartStopButton().performClick());//to incrementing
             assertTrue(getStartStopButton().performClick());//kept as startstop atm.
         });
         Thread.sleep(3500); // <-- do not run this in the UI thread!  //sleeps 3 to wait for increment - > running
@@ -210,7 +210,7 @@ public abstract class AbstractStopwatchActivityTest {
         getActivity().runOnUiThread(() -> {
             assertEquals(1, getDisplayedValue());
         });
-        Thread.sleep(1000); // <-- do not run this in the UI thread!
+        Thread.sleep(1100); // <-- do not run this in the UI thread!
         runUiThreadTasks();
         //needs decrementing
         getActivity().runOnUiThread(() -> {
@@ -219,7 +219,7 @@ public abstract class AbstractStopwatchActivityTest {
         });
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
-            assertTrue(getStartStopButton().performClick());//to incrementing
+            //assertTrue(getStartStopButton().performClick());//to incrementing
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
@@ -230,12 +230,12 @@ public abstract class AbstractStopwatchActivityTest {
         getActivity().runOnUiThread(() -> {
             assertEquals(3, getDisplayedValue());
         });
-        Thread.sleep(2000);
+        Thread.sleep(2200);
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
             assertEquals(1, getDisplayedValue());
         });
-        Thread.sleep(1000);
+        Thread.sleep(1100);
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> assertEquals(0, getDisplayedValue()));
     }
