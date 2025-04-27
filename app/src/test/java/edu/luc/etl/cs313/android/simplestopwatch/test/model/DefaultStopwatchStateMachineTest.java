@@ -22,7 +22,8 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        Context c = null;
+        Context c = null; //this fixes some of the testing.
+        // A context is passed in the main program to play sound
         setModel(new DefaultStopwatchStateMachine(getDependency(), getDependency(), c));
     }
 
@@ -34,7 +35,7 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
 
 
     @Test
-    public void testMaximumPress() {//failin
+    public void testMaximumPress() {//failing
         assertEquals(0, getDependency().getRuntime());
 
         // Click 99 times to add exactly 99 seconds
@@ -184,7 +185,7 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     }
 
     @Test
-    public void testInitiialTimer(){
+    public void testInitialTimer(){
         //David: make sure timer starts at 00
         assertEquals(0, getDependency().getTime());
 
@@ -211,15 +212,10 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
         assertTimeEquals(1);
 
         // Begin countdown
-        //getModel().onStartStop();
-        //getModel().onStartStop();
         getModel().onTick();
         getModel().onTick();
         getModel().onTick();
         getModel().onTick();
-        // Simulate stop
-        //getModel().onStartStop();
-
         // Alarm should stop
          assertFalse(getDependency().isAlarmOn());
     }
@@ -227,19 +223,14 @@ public class DefaultStopwatchStateMachineTest extends AbstractStopwatchStateMach
     @Test
     public void testConsistentTime() {
         // Add two seconds
-        for (int i = 0; i < 2; i++){
-            getModel().onStartStop();
-            //getModel().onTick();
-            //getModel().onStartStop();
-        }
+        getModel().onStartStop();
+        getModel().onStartStop();
 
         // Ensure time = 2
         assertEquals(2, getDependency().getTime());
         assertEquals(2, getDependency().getRuntime());
 
         // Start countdown
-        //getModel().onStartStop();
-        //getModel().onStartStop();
         getModel().onTick();
         getModel().onTick();
         getModel().onTick();

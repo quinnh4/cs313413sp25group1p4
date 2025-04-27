@@ -94,9 +94,4 @@ public class StopwatchAdapter extends Activity implements StopwatchModelListener
     public void onStartStop(final View view) {
         model.onStartStop();
     }
-
-//    public void onLapReset(final View view)  {
-//        model.onLapReset();
-//        //TODO:removeable once view and state machine are updated.
-//    }
 }

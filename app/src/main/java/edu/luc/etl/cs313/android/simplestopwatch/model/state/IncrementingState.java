@@ -1,8 +1,6 @@
 package edu.luc.etl.cs313.android.simplestopwatch.model.state;
 
 import edu.luc.etl.cs313.android.simplestopwatch.R;
-import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContainer;
-import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
 
 public class IncrementingState implements StopwatchState {
     private final StopwatchStateMachine sm;
@@ -33,7 +31,7 @@ public class IncrementingState implements StopwatchState {
         sm.tickWaitTime();
         if (sm.getWaitTime() <= 0 || sm.isContainerFull()) {
             sm.playAlarm();//play alarm when timer starts ticking
-            sm.toCountdownState(); //TODO replace with runningstate in future.
+            sm.toRunningState();
         }
     }
 }

@@ -4,9 +4,9 @@ public class DefaultTimerContainer implements BoundedContainer{
     private final int min;
     private final int max = 99;
     private int timeValue;
-
+    //default constructor
     public DefaultTimerContainer(){this(0);}
-
+    //variable constructor
     public DefaultTimerContainer(int min) {
         if (min >= max){
             throw new IllegalArgumentException("min >=99!");

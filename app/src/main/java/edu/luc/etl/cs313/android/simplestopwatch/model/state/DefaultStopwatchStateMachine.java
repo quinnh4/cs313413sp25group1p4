@@ -6,8 +6,6 @@ import edu.luc.etl.cs313.android.simplestopwatch.model.container.BoundedContaine
 import edu.luc.etl.cs313.android.simplestopwatch.model.container.DefaultTimerContainer;
 import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
 import edu.luc.etl.cs313.android.simplestopwatch.model.time.TimeModel;
-import edu.luc.etl.cs313.android.simplestopwatch.model.soundManager;
-import edu.luc.etl.cs313.android.simplestopwatch.R;
 import android.content.Context;
 
 /**
@@ -42,10 +40,6 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         listener.onStateUpdate(state.getId());
     }
 
-    @Override public void toCountdownState() {
-        setState(COUNTDOWN);
-    }
-
     private StopwatchModelListener listener;
 
     @Override
@@ -56,26 +50,14 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
     // forward event uiUpdateListener methods to the current state
     // these must be synchronized because events can come from the
     // UI thread or the timer thread
-    @Override public synchronized void onStartStop() {
-        state.onStartStop();
+    @Override public synchronized void onStartStop() {state.onStartStop();}
 
-    }
-
-    @Override
-    public synchronized void onTick() {
-
-        state.onTick();
-
-    }
-
-
+    @Override public synchronized void onTick() {state.onTick();}
     @Override public void updateUIRuntime() { listener.onTimeUpdate(timeModel.getRuntime()); }
-    @Override public void updateUILaptime() { listener.onTimeUpdate(timeModel.getLaptime()); }//TODO may need removing.
+
 
     // known states
     private final StopwatchState STOPPED     = new StoppedState(this);
-    //TODO rename countdown to running, to match UML
-    private final StopwatchState COUNTDOWN = new CountdownState(this);
     private final StopwatchState RUNNING     = new RunningState(this);
     private final StopwatchState INCREMENTING = new IncrementingState(this);
     private final StopwatchState ALARMING = new AlarmingState(this);
@@ -86,13 +68,12 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         setState(RUNNING); }
     @Override public void toStoppedState()    {
         setState(STOPPED);
-        //clockModel.stop();//this fixed the fast decrement after the first tryy
 
     }
     @Override
     public void toIncrementingState() {
         setState(INCREMENTING);
-        // intialize to 3 seconds
+        // initialize to 3 seconds
         waitTime = 3;
         timeModel.resetRuntime();
         actionUpdateView();
@@ -102,6 +83,7 @@ public class DefaultStopwatchStateMachine implements StopwatchStateMachine {
         // resets waitTime when button pressed in incrementing state
         waitTime = 3;
     }
+    //methods to manage incrementing waitTime
     @Override
     public void tickWaitTime(){--waitTime;}
     @Override

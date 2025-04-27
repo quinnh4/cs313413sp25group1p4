@@ -7,6 +7,4 @@ package edu.luc.etl.cs313.android.simplestopwatch.common;
  */
 public interface StopwatchUIListener {
     void onStartStop();
-
-    //void onLapReset();//TODO: removeable when state machine is adjusted.
 }

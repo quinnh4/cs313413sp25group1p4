@@ -11,7 +11,6 @@ public interface TimeModel {
     void incRuntime();
     void decRuntime();
     int getRuntime();
-    void setLaptime();
     int getLaptime();
     void setRuntime(int runtime);
 }

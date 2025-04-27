@@ -1,8 +1,6 @@
 package edu.luc.etl.cs313.android.simplestopwatch.test.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 import org.junit.After;
 import org.junit.Before;
@@ -75,41 +73,7 @@ public abstract class AbstractStopwatchStateMachineTest {
     }
 
 
-    /**
-     * Verifies the following scenario: time is 0, press start, wait 5+ seconds,
-     * expect time 5, press lap, wait 4 seconds, expect time 5, press start,
-     * expect time 5, press lap, expect time 9, press lap, expect time 0.
-     *
-     * @throws Throwable
-     */
-//    @Test
-//    public void testScenarioRunLapReset() {
-//        assertTimeEquals(0);
-//        assertFalse(dependency.isStarted());
-//        // directly invoke the button press event handler methods
-//        model.onStartStop();
-//        assertEquals(R.string.RUNNING, dependency.getState());
-//        assertTrue(dependency.isStarted());
-//        onTickRepeat(5);
-//        assertTimeEquals(5);
-//        model.onLapReset();
-//        assertEquals(R.string.LAP_RUNNING, dependency.getState());
-//        assertTrue(dependency.isStarted());
-//        onTickRepeat(4);
-//        assertTimeEquals(5);
-//        model.onStartStop();
-//        assertEquals(R.string.LAP_STOPPED, dependency.getState());
-//        assertFalse(dependency.isStarted());
-//        assertTimeEquals(5);
-//        model.onLapReset();
-//        assertEquals(R.string.STOPPED, dependency.getState());
-//        assertFalse(dependency.isStarted());
-//        assertTimeEquals(9);
-//        model.onLapReset();
-//        assertEquals(R.string.STOPPED, dependency.getState());
-//        assertFalse(dependency.isStarted());
-//        assertTimeEquals(0);
-//    }
+
 
     /**
      * Sends the given number of tick events to the model.
@@ -204,10 +168,7 @@ class UnifiedMockDependency implements TimeModel, ClockModel, StopwatchModelList
     }
 
 
-    @Override
-    public void setLaptime() {
-        lapTime = runningTime;
-    }
+
 
     @Override
     public int getLaptime() {
@@ -223,10 +184,6 @@ class UnifiedMockDependency implements TimeModel, ClockModel, StopwatchModelList
 
     public boolean isAlarmOn() {
         return alarmOn;
-    }
-
-    public void setAlarmOn(boolean alarmOn) {
-        this.alarmOn = alarmOn;
     }
 }
 

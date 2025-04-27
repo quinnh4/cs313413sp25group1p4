@@ -9,9 +9,6 @@
     <string name="startStop">click</string>
     <string name="seconds">00</string>
 
-    <string name="COUNTDOWN">Countdown</string>
-
-
     <!-- model state display names -->
     <string name="STOPPED">Stopped</string>
     <string name="RUNNING">Running</string>

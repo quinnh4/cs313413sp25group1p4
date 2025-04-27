@@ -5,10 +5,12 @@ import edu.luc.etl.cs313.android.simplestopwatch.R;
 public class AlarmingState implements StopwatchState{
     //state to handle alarm triggers.
 
-    private final StopwatchSMStateView sm;
+
     public AlarmingState(final StopwatchSMStateView sm) {
         this.sm = sm;
     }
+    private final StopwatchSMStateView sm;
+
     @Override
     public void updateView() {
         sm.updateUIRuntime();

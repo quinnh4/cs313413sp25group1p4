@@ -4,15 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
+import android.content.pm.ActivityInfo;
 import org.junit.Test;
 
 import android.widget.Button;
 import android.widget.TextView;
 import edu.luc.etl.cs313.android.simplestopwatch.R;
 import edu.luc.etl.cs313.android.simplestopwatch.android.StopwatchAdapter;
-
-import static edu.luc.etl.cs313.android.simplestopwatch.common.Constants.SEC_PER_MIN;
 
 /**
  * Abstract GUI-level test superclass of several essential stopwatch scenarios.
@@ -42,25 +40,7 @@ public abstract class AbstractStopwatchActivityTest {
         getActivity().runOnUiThread(() -> assertEquals(0, getDisplayedValue()));
     }
 
-    /**
-     * Verifies the following scenario: time is 0, press start, wait 5+ seconds, expect time 5.
-     * this test is from the original project and not relevent.
-     * @throws Throwable
-     */
-//    @Test
-//    public void testActivityScenarioRun() throws Throwable {
-//
-//        getActivity().runOnUiThread(() -> {
-//            assertEquals(0, getDisplayedValue());
-//            assertTrue(getStartStopButton().performClick());
-//        });
-//        Thread.sleep(5500); // <-- do not run this in the UI thread!
-//        runUiThreadTasks();
-//        getActivity().runOnUiThread(() -> {
-//            assertEquals(5, getDisplayedValue());
-//            assertTrue(getStartStopButton().performClick());
-//        });
-//    }
+
     /**
      * Tests rotation, may need to be moved.
      *
@@ -76,12 +56,13 @@ public abstract class AbstractStopwatchActivityTest {
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
             assertTrue(getStartStopButton().performClick());
-            assertTrue(getStartStopButton().performClick());
         });
         Thread.sleep(3500); // <-- do not run this in the UI thread!
         runUiThreadTasks();
-        //code to save state via robolectric
-        //code to update state to be rotated
+        //code to update state to rotate
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        //rotating back
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getActivity().runOnUiThread(() -> {
             //checks if state is restored.
             assertEquals(5, getDisplayedValue());
@@ -102,7 +83,7 @@ public abstract class AbstractStopwatchActivityTest {
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
             assertTrue(getStartStopButton().performClick());//first click +1
-            //assertTrue(getStartStopButton().performClick());//uncommented cuz intinal click should increment
+            //assertTrue(getStartStopButton().performClick());//uncommented cuz initial click should increment
             assertTrue(getStartStopButton().performClick()); // second click +1
         });
         Thread.sleep(3100); // wait for 3 seconds
@@ -175,7 +156,7 @@ public abstract class AbstractStopwatchActivityTest {
     }
 
     /**
-     *  Tests if time stays consistent between gets while not decrementign
+     *  Tests if time stays consistent between gets while not decrementing
      *  @throws Throwable
      */
     @Test
@@ -216,7 +197,7 @@ public abstract class AbstractStopwatchActivityTest {
         //needs decrementing
         getActivity().runOnUiThread(() -> {
             assertEquals(0, getDisplayedValue());
-            assertTrue(getStartStopButton().performClick());  // stops the alarm still kept as startstopbutton
+            assertTrue(getStartStopButton().performClick());  // stops the alarm still kept as startstop button
         });
         runUiThreadTasks();
         getActivity().runOnUiThread(() -> {
